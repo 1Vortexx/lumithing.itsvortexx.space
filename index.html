@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/x-icon" href="https://lumithing.itsvortexx.space/tray.png">
+  <title>LumiThing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cyan:        #06b6d4;
+      --cyan-dim:    #0891b2;
+      --cyan-glow:   rgba(6,182,212,0.15);
+      --purple:      #7c3aed;
+      --purple-mid:  #8b5cf6;
+      --purple-glow: rgba(124,58,237,0.15);
+      --bg:          #080812;
+      --bg2:         #0d0d1a;
+      --surface:     #111128;
+      --surface2:    #16163a;
+      --text:        #e2e8f0;
+      --muted:       #6b7280;
+      --border:      rgba(255,255,255,0.08);
+      --border-h:    rgba(6,182,212,0.4);
+      --radius:      14px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(8, 8, 18, 0.85);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-weight: 800;
+      font-size: 1.25rem;
+      background: linear-gradient(135deg, var(--cyan), var(--purple-mid));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-cta {
+      background: linear-gradient(135deg, var(--cyan), var(--purple-mid));
+      color: #fff !important;
+      padding: 0.45rem 1.1rem;
+      border-radius: 8px;
+      font-weight: 600 !important;
+      transition: opacity 0.2s !important;
+    }
+
+    .nav-cta:hover { opacity: 0.85; }
+
+    /* ── HERO ── */
+    .hero {
+      text-align: center;
+      padding: 5rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 25% 10%, rgba(6,182,212,0.1) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 50% at 75% 80%, rgba(124,58,237,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-logo {
+      width: 120px;
+      height: auto;
+      margin: 0 auto 1.5rem;
+      display: block;
+      filter: drop-shadow(0 0 24px rgba(6,182,212,0.35));
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(6,182,212,0.1);
+      color: var(--cyan);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.9rem;
+      border-radius: 999px;
+      margin-bottom: 1.5rem;
+      border: 1px solid rgba(6,182,212,0.25);
+    }
+
+    .hero h1 {
+      font-size: clamp(2.8rem, 6vw, 4.5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.25rem;
+      color: #fff;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(135deg, var(--cyan) 0%, var(--purple-mid) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--muted);
+      max-width: 560px;
+      margin: 0 auto 2.5rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: linear-gradient(135deg, var(--cyan), var(--purple-mid));
+      color: #fff;
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 0.85rem 2rem;
+      border-radius: 10px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 4px 24px rgba(124,58,237,0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(124,58,237,0.45);
+    }
+
+    .btn-primary:active { transform: translateY(0); }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: var(--surface);
+      color: var(--text);
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 0.85rem 2rem;
+      border-radius: 10px;
+      text-decoration: none;
+      border: 1.5px solid var(--border);
+      transition: border-color 0.2s, transform 0.15s;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--cyan);
+      transform: translateY(-2px);
+    }
+
+    .platform-note {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 0.75rem;
+    }
+
+    .platform-note span {
+      color: var(--purple-mid);
+      font-weight: 500;
+    }
+
+    /* ── HERO IMAGE ── */
+    .hero-screenshot {
+      margin: 3.5rem auto 0;
+      max-width: 680px;
+      padding: 0 2rem;
+    }
+
+    .hero-screenshot img {
+      width: 100%;
+      height: auto;
+      border-radius: 20px;
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.06),
+        0 30px 80px rgba(0,0,0,0.6),
+        0 0 80px rgba(6,182,212,0.08),
+        0 0 80px rgba(124,58,237,0.08);
+    }
+
+    /* ── SECTION SHARED ── */
+    section { padding: 5rem 2rem; }
+
+    .section-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      color: #fff;
+    }
+
+    .section-sub {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 520px;
+    }
+
+    /* ── FEATURES ── */
+    #features { background: var(--bg2); }
+
+    .features-header { text-align: center; margin-bottom: 3rem; }
+    .features-header .section-sub { margin: 0 auto; }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .feature-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+
+    .feature-card:hover {
+      border-color: var(--border-h);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(6,182,212,0.08);
+    }
+
+    .feature-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, rgba(6,182,212,0.15), rgba(124,58,237,0.15));
+      border: 1px solid rgba(6,182,212,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+      color: var(--cyan);
+    }
+
+    .feature-card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+      color: #fff;
+    }
+
+    .feature-card p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    /* ── GETTING STARTED ── */
+    #install { background: var(--bg); }
+
+    .install-wrap {
+      max-width: 900px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .steps { list-style: none; counter-reset: steps; }
+
+    .steps li {
+      counter-increment: steps;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      margin-bottom: 1.75rem;
+    }
+
+    .steps li::before {
+      content: counter(steps);
+      flex-shrink: 0;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--cyan), var(--purple-mid));
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .steps li h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.2rem; color: #fff; }
+    .steps li p  { font-size: 0.875rem; color: var(--muted); }
+
+    .install-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .install-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; color: #fff; }
+    .install-card p  { font-size: 0.875rem; color: var(--muted); margin-bottom: 1.5rem; }
+
+    .install-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: linear-gradient(135deg, var(--cyan), var(--purple-mid));
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 0.75rem 1.75rem;
+      border-radius: 9px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      justify-content: center;
+      transition: transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 4px 20px rgba(124,58,237,0.25);
+    }
+
+    .install-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(124,58,237,0.4);
+    }
+
+    .install-sub {
+      margin-top: 1rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .install-sub span { color: var(--purple-mid); font-weight: 600; }
+
+    /* ── BETA BANNER ── */
+    .beta-banner {
+      background: linear-gradient(135deg, rgba(6,182,212,0.07), rgba(124,58,237,0.07));
+      border: 1px solid rgba(124,58,237,0.25);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.75rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      max-width: 900px;
+      margin: 0 auto 3rem;
+    }
+
+    .beta-banner-icon {
+      color: var(--purple-mid);
+      font-size: 1.2rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .beta-banner h4 { font-size: 0.95rem; font-weight: 700; color: var(--purple-mid); margin-bottom: 0.25rem; }
+    .beta-banner p  { font-size: 0.875rem; color: var(--muted); }
+    .beta-banner a  { color: var(--cyan); font-weight: 600; text-decoration: none; }
+    .beta-banner a:hover { text-decoration: underline; }
+
+    /* ── CREDITS ── */
+    #credits { background: var(--bg2); text-align: center; }
+
+    .credits-grid {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 2.5rem;
+    }
+
+    .credit-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem 2rem;
+      min-width: 200px;
+    }
+
+    .credit-card .name { font-weight: 700; font-size: 1rem; margin-bottom: 0.25rem; color: #fff; }
+    .credit-card .role { font-size: 0.85rem; color: var(--muted); }
+
+    .credit-card a {
+      display: inline-block;
+      margin-top: 0.6rem;
+      font-size: 0.8rem;
+      color: var(--cyan);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .credit-card a:hover { text-decoration: underline; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #05050e;
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+      padding: 2.5rem 2rem;
+      font-size: 0.875rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-logo {
+      font-weight: 800;
+      font-size: 1.1rem;
+      background: linear-gradient(135deg, var(--cyan), var(--purple-mid));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: inline-block;
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      list-style: none;
+      margin: 1rem 0;
+    }
+
+    .footer-links a {
+      color: rgba(255,255,255,0.4);
+      text-decoration: none;
+      transition: color 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .footer-links a:hover { color: var(--cyan); }
+
+    footer p { margin-top: 0.5rem; font-size: 0.8rem; opacity: 0.4; }
+
+    #download-btn.loading { opacity: 0.7; pointer-events: none; }
+
+    @media (max-width: 720px) {
+      .install-wrap { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .mockup-shortcuts { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="#">LumiThing</a>
+    <ul class="nav-links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#install">Install</a></li>
+      <li><a href="#credits">Credits</a></li>
+      <li><a href="https://github.com/1vortexx/LumiThing" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> GitHub</a></li>
+      <li><a href="#install" class="nav-cta"><i class="fa-solid fa-download"></i> Download</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <img src="https://lumithing.itsvortexx.space/tray.png" alt="LumiThing" class="hero-logo" />
+    <div class="badge">Now in Beta — Linux Available</div>
+    <h1>Your CarThing,<br /><span>Reimagined.</span></h1>
+    <p>LumiThing is a custom operating system for the Spotify CarThing — giving your device a full second life with a beautiful, feature-rich experience.</p>
+    <div class="hero-actions">
+      <button class="btn-primary" id="download-btn" onclick="downloadLatest()">
+        <i class="fa-solid fa-download"></i>
+        Download for Linux
+      </button>
+      <a class="btn-secondary" href="https://github.com/1vortexx/LumiThing" target="_blank" rel="noopener">
+        <i class="fa-brands fa-github"></i>
+        View on GitHub
+      </a>
+    </div>
+    <p class="platform-note">Linux supported now &nbsp;·&nbsp; <span>Windows &amp; Mac coming soon</span></p>
+
+    <!-- Hero screenshot -->
+    <div class="hero-screenshot">
+      <img src="https://lumithing.itsvortexx.space/LumiThing.png" alt="LumiThing UI" />
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section id="features">
+    <div class="features-header">
+      <div class="section-label">What's Included</div>
+      <h2 class="section-title">Everything your CarThing deserves</h2>
+      <p class="section-sub">A complete, polished OS with features Spotify never gave you — and a desktop companion that makes setup effortless.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-music"></i></div>
+        <h3>Spotify Controls</h3>
+        <p>Play, pause, skip, and adjust volume via the touchscreen or physical dial — with a full media player showing album art, progress, shuffle, and repeat.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-bolt"></i></div>
+        <h3>Customizable Shortcuts</h3>
+        <p>Add up to 8 app shortcuts with Font Awesome icons or custom images. Assign your favorites to the four physical preset buttons on top.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-desktop"></i></div>
+        <h3>Desktop Companion</h3>
+        <p>A guided installer and companion app for Linux (Windows &amp; Mac coming soon) that keeps your CarThing connected and up to date — no command line needed.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-rotate"></i></div>
+        <h3>OTA Updates</h3>
+        <p>Updates are delivered automatically via GitHub Releases. See a new version? Hit Download, then Install — done.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-wave-square"></i></div>
+        <h3>Audio Visualizer &amp; Art Styles</h3>
+        <p>Live audio visualizer in the media player, with multiple album art background styles including full bleed and thumbnail modes.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-lock"></i></div>
+        <h3>Lock Your Computer</h3>
+        <p>Lock your PC directly from the CarThing menu — or double-tap the M button for an instant shortcut.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-moon"></i></div>
+        <h3>Sleep Timer &amp; Screensaver</h3>
+        <p>Set a sleep timer or let the built-in screensaver kick in automatically when the device is idle.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-rotate-left"></i></div>
+        <h3>Restore to Stock</h3>
+        <p>Changed your mind? Restore your CarThing to the original Spotify software at any time from the system menu.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- INSTALL -->
+  <section id="install">
+    <div class="beta-banner">
+      <div class="beta-banner-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+      <div>
+        <h4>LumiThing is in Beta</h4>
+        <p>Expect occasional bugs. If you run into issues, please open a report on <a href="https://github.com/1vortexx/LumiThing/issues" target="_blank" rel="noopener">GitHub</a> or join the <a href="#discord">Discord</a> — every report helps make LumiThing better.</p>
+      </div>
+    </div>
+    <div class="install-wrap">
+      <div>
+        <div class="section-label">Getting Started</div>
+        <h2 class="section-title">Up and running in minutes</h2>
+        <p class="section-sub" style="margin-bottom: 2rem;">The desktop companion handles everything — no terminal required.</p>
+        <ol class="steps">
+          <li>
+            <div>
+              <h4>Download LumiThing</h4>
+              <p>Grab the latest release for your platform using the button on this page.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h4>Run the Installer</h4>
+              <p>Open the downloaded file and follow the installation prompts.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h4>Connect Your CarThing</h4>
+              <p>Open the LumiThing desktop companion and follow the guided setup to flash your CarThing.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h4>You're Done</h4>
+              <p>LumiThing is now running on your device. Future updates install automatically.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+      <div class="install-card">
+        <h3>Download LumiThing</h3>
+        <p>Latest release — always up to date</p>
+        <button class="install-btn" id="install-btn" onclick="downloadLatest()">
+          <i class="fa-solid fa-download"></i>
+          Download for Linux
+        </button>
+        <p class="install-sub">Windows &amp; Mac — <span>coming soon</span></p>
+        <p class="install-sub" style="margin-top: 0.5rem;">
+          <a href="https://github.com/1vortexx/LumiThing/releases" target="_blank" rel="noopener" style="color: var(--muted);">View all releases on GitHub</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CREDITS -->
+  <section id="credits">
+    <div class="section-label" style="text-align:center">Built With Passion</div>
+    <h2 class="section-title" style="text-align:center">Credits</h2>
+    <p class="section-sub" style="margin: 0 auto; text-align:center;">LumiThing stands on the shoulders of great work. Thank you to everyone who made this possible.</p>
+    <div class="credits-grid">
+      <div class="credit-card">
+        <div class="name">1Vortexx</div>
+        <div class="role">Primary LumiThing Developer</div>
+        <a href="https://itsvortexx.space" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i> itsvortexx.space</a>
+      </div>
+      <div class="credit-card">
+        <div class="name">BluDood</div>
+        <div class="role">Developer of GlanceThing<br />LumiThing's base &amp; inspiration</div>
+      </div>
+    </div>
+    <p style="margin-top: 2rem; font-size: 0.85rem; color: var(--muted); text-align:center;">LumiThing is an independent hobby project and is not affiliated with or competing against Nocturne, GlanceThing, or any other CarThing projects.<br />Built with permission from BluDood to base LumiThing off of GlanceThing.</p>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">LumiThing</div>
+    <ul class="footer-links">
+      <li><a href="https://github.com/1vortexx/LumiThing" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> GitHub</a></li>
+      <li><a href="https://github.com/1vortexx/LumiThing/releases" target="_blank" rel="noopener"><i class="fa-solid fa-box-archive"></i> Releases</a></li>
+      <li><a href="https://github.com/1vortexx/LumiThing/issues" target="_blank" rel="noopener"><i class="fa-solid fa-bug"></i> Bug Reports</a></li>
+      <li><a href="https://itsvortexx.space" target="_blank" rel="noopener"><i class="fa-solid fa-user"></i> Developer</a></li>
+    </ul>
+    <p>Your CarThing, reimagined. &nbsp;·&nbsp; Made with care by 1Vortexx.</p>
+  </footer>
+
+  <script>
+    async function downloadLatest() {
+      const btn = document.getElementById('download-btn');
+      const installBtn = document.getElementById('install-btn');
+      [btn, installBtn].forEach(b => { if (b) b.classList.add('loading'); });
+      try {
+        const res = await fetch('https://api.github.com/repos/1vortexx/LumiThing/releases/latest');
+        if (!res.ok) throw new Error();
+        const data = await res.json();
+        const asset =
+          data.assets.find(a => a.name.toLowerCase().includes('linux') && a.name.endsWith('.AppImage')) ||
+          data.assets.find(a => a.name.toLowerCase().includes('linux')) ||
+          data.assets.find(a => a.name.endsWith('.AppImage')) ||
+          data.assets.find(a => a.name.endsWith('.deb')) ||
+          data.assets.find(a => a.name.endsWith('.tar.gz')) ||
+          data.assets[0];
+        if (!asset) { window.open(data.html_url, '_blank'); return; }
+        const link = document.createElement('a');
+        link.href = asset.browser_download_url;
+        link.download = asset.name;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      } catch {
+        window.open('https://github.com/1vortexx/LumiThing/releases/latest', '_blank');
+      } finally {
+        [btn, installBtn].forEach(b => { if (b) b.classList.remove('loading'); });
+      }
+    }
+  </script>
+</body>
+</html>
