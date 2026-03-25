@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="refresh" content="3;url=https://example.com">
+  <title>Redirecting...</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #0a0a0a;
+      font-family: 'Space Mono', monospace;
+      color: #e8e8e8;
+      overflow: hidden;
+    }
+
+    .container {
+      text-align: center;
+      animation: fadeIn 0.6s ease forwards;
+    }
+
+    .arrow {
+      font-size: 3rem;
+      display: block;
+      margin-bottom: 1.5rem;
+      animation: bounce 1.2s ease-in-out infinite;
+    }
+
+    h1 {
+      font-size: 1.1rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 0.5rem;
+    }
+
+    .dest {
+      font-size: 0.85rem;
+      color: #4ade80;
+      letter-spacing: 0.1em;
+      margin-bottom: 2rem;
+    }
+
+    .bar-track {
+      width: 220px;
+      height: 2px;
+      background: #222;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      background: #4ade80;
+      animation: fill 3s linear forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateX(0); }
+      50%       { transform: translateX(8px); }
+    }
+
+    @keyframes fill {
+      from { width: 0%; }
+      to   { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <span class="arrow">→</span>
+    <h1>Redirecting</h1>
+    <p class="dest">example.com</p>
+    <div class="bar-track">
+      <div class="bar-fill"></div>
+    </div>
+  </div>
+
+  <script>
+    // JS fallback redirect (fires after 3 seconds)
+    setTimeout(() => {
+      window.location.href = "https://discord.gg/RqhrFZG35n";
+    }, 3000);
+  </script>
+</body>
+</html>
