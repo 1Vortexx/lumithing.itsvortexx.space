@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/x-icon" href="https://lumithing.itsvortexx.space/tray.png" />
+  <title>LumiThing — Your CarThing, Reimagined</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red:        #dc2626;
+      --red-bright: #ef4444;
+      --red-dim:    #b91c1c;
+      --red-glow:   rgba(220,38,38,0.18);
+      --red-subtle: rgba(220,38,38,0.08);
+      --bg:         #060608;
+      --bg2:        #0a0a0f;
+      --surface:    #0f0f16;
+      --surface2:   #161620;
+      --text:       #f1f5f9;
+      --muted:      #64748b;
+      --muted2:     #94a3b8;
+      --border:     rgba(255,255,255,0.07);
+      --border-h:   rgba(220,38,38,0.35);
+      --radius:     16px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: rgba(220,38,38,0.3); border-radius: 3px; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(6,6,8,0.88);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2.5rem;
+      height: 62px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-weight: 900;
+      font-size: 1.2rem;
+      letter-spacing: -0.03em;
+      color: #fff;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .nav-logo-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--red-bright);
+      box-shadow: 0 0 10px var(--red-bright);
+      flex-shrink: 0;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-cta {
+      background: var(--red) !important;
+      color: #fff !important;
+      padding: 0.45rem 1.1rem;
+      border-radius: 8px;
+      font-weight: 600 !important;
+      transition: background 0.2s !important, box-shadow 0.2s !important;
+      box-shadow: 0 0 16px var(--red-glow);
+    }
+
+    .nav-cta:hover {
+      background: var(--red-bright) !important;
+      box-shadow: 0 0 24px rgba(239,68,68,0.35) !important;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      text-align: center;
+      padding: 6rem 2rem 5rem;
+      position: relative;
+      overflow: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(220,38,38,0.12) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 40% at 15% 70%, rgba(220,38,38,0.05) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 85% 70%, rgba(220,38,38,0.05) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 75%);
+      pointer-events: none;
+    }
+
+    .hero-logo {
+      width: 120px;
+      height: auto;
+      margin: 0 auto 1.75rem;
+      display: block;
+      filter: sepia(1) saturate(8) hue-rotate(300deg) brightness(0.9)
+              drop-shadow(0 0 36px rgba(220,38,38,0.55));
+      position: relative;
+      z-index: 1;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(220,38,38,0.1);
+      color: #fca5a5;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.85rem;
+      border-radius: 999px;
+      margin-bottom: 2rem;
+      border: 1px solid rgba(220,38,38,0.2);
+      position: relative;
+      z-index: 1;
+    }
+
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--red-bright);
+      animation: pulse 2s ease infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(0.8); }
+    }
+
+    .hero h1 {
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      margin-bottom: 1.5rem;
+      color: #fff;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero h1 .line2 {
+      background: linear-gradient(135deg, var(--red-bright) 0%, #f87171 50%, #fca5a5 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--muted2);
+      max-width: 500px;
+      margin: 0 auto 2.75rem;
+      line-height: 1.65;
+      font-weight: 400;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 0.875rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 1.25rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      background: var(--red);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.975rem;
+      padding: 0.875rem 1.875rem;
+      border-radius: 10px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+      box-shadow: 0 4px 24px rgba(220,38,38,0.35), 0 0 0 1px rgba(220,38,38,0.2);
+      letter-spacing: -0.01em;
+      font-family: inherit;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(220,38,38,0.5), 0 0 0 1px rgba(220,38,38,0.3);
+      background: var(--red-bright);
+    }
+
+    .btn-primary:active { transform: translateY(0); }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      background: var(--surface);
+      color: var(--muted2);
+      font-weight: 600;
+      font-size: 0.975rem;
+      padding: 0.875rem 1.875rem;
+      border-radius: 10px;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      transition: border-color 0.2s, transform 0.15s, color 0.2s;
+      letter-spacing: -0.01em;
+      font-family: inherit;
+    }
+
+    .btn-secondary:hover {
+      border-color: rgba(255,255,255,0.2);
+      color: var(--text);
+      transform: translateY(-2px);
+    }
+
+    .platform-note {
+      font-size: 0.8rem;
+      color: var(--muted);
+      position: relative;
+      z-index: 1;
+    }
+
+    .platform-note .supported {
+      color: #86efac;
+      font-weight: 600;
+    }
+
+    /* ── HERO IMAGE ── */
+    .hero-screenshot {
+      margin: 4rem auto 0;
+      max-width: 740px;
+      padding: 0 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-screenshot::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, rgba(220,38,38,0.2), rgba(220,38,38,0.05), rgba(220,38,38,0.15));
+      z-index: -1;
+      filter: blur(20px);
+    }
+
+    .hero-screenshot img {
+      width: 100%;
+      height: auto;
+      border-radius: 20px;
+      display: block;
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.06),
+        0 40px 100px rgba(0,0,0,0.8),
+        0 0 60px rgba(220,38,38,0.1);
+    }
+
+    /* ── STATS BAR ── */
+    .stats-bar {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 2rem;
+    }
+
+    .stats-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      text-align: center;
+      padding: 0.5rem 2.5rem;
+      border-right: 1px solid var(--border);
+    }
+
+    .stat:last-child { border-right: none; }
+
+    .stat-num {
+      font-size: 1.75rem;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+
+    .stat-num span { color: var(--red-bright); }
+
+    .stat-label {
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    /* ── SECTION SHARED ── */
+    section { padding: 6rem 2rem; }
+
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--red-bright);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-size: clamp(1.9rem, 3.5vw, 2.75rem);
+      font-weight: 900;
+      letter-spacing: -0.035em;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+      color: #fff;
+    }
+
+    .section-sub {
+      font-size: 1.05rem;
+      color: var(--muted2);
+      max-width: 500px;
+      line-height: 1.65;
+    }
+
+    /* ── FEATURES ── */
+    #features { background: var(--bg2); }
+
+    .features-header { text-align: center; margin-bottom: 3.5rem; }
+    .features-header .section-sub { margin: 0 auto; }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1px;
+      max-width: 1100px;
+      margin: 0 auto;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .feature-card {
+      background: var(--surface);
+      padding: 2rem;
+      transition: background 0.2s;
+      position: relative;
+    }
+
+    .feature-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--red-subtle);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .feature-card:hover { background: var(--surface2); }
+    .feature-card:hover::after { opacity: 1; }
+
+    .feature-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--red-subtle);
+      border: 1px solid rgba(220,38,38,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      margin-bottom: 1.25rem;
+      color: var(--red-bright);
+      position: relative;
+      z-index: 1;
+    }
+
+    .feature-card h3 {
+      font-size: 0.975rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+      color: #fff;
+      position: relative;
+      z-index: 1;
+    }
+
+    .feature-card p {
+      font-size: 0.875rem;
+      color: var(--muted);
+      line-height: 1.6;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── INSTALL ── */
+    #install { background: var(--bg); }
+
+    .install-wrap {
+      max-width: 960px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .steps { list-style: none; counter-reset: steps; }
+
+    .steps li {
+      counter-increment: steps;
+      display: flex;
+      gap: 1.25rem;
+      align-items: flex-start;
+      margin-bottom: 2rem;
+      position: relative;
+    }
+
+    .steps li:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      left: 16px;
+      top: 36px;
+      bottom: -8px;
+      width: 1px;
+      background: var(--border);
+    }
+
+    .step-num {
+      flex-shrink: 0;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--red);
+      color: #fff;
+      font-size: 0.8rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 16px var(--red-glow);
+    }
+
+    .steps li h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 0.2rem;
+      color: #fff;
+    }
+
+    .steps li p { font-size: 0.875rem; color: var(--muted); line-height: 1.55; }
+
+    /* Download Card */
+    .install-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2.25rem;
+      position: sticky;
+      top: 80px;
+    }
+
+    .install-card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .install-card h3 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.025em;
+    }
+
+    .version-badge {
+      background: var(--red-subtle);
+      color: var(--red-bright);
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid rgba(220,38,38,0.15);
+    }
+
+    .install-card > p {
+      font-size: 0.875rem;
+      color: var(--muted);
+      margin-bottom: 1.75rem;
+    }
+
+    .download-platforms {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .dl-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.875rem;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.875rem 1.25rem;
+      cursor: pointer;
+      transition: border-color 0.2s, transform 0.15s;
+      text-decoration: none;
+      font-family: inherit;
+      width: 100%;
+      text-align: left;
+    }
+
+    .dl-btn:hover {
+      border-color: rgba(220,38,38,0.3);
+      transform: translateY(-1px);
+    }
+
+    .dl-btn.primary {
+      background: var(--red);
+      border-color: transparent;
+      box-shadow: 0 4px 20px rgba(220,38,38,0.3);
+    }
+
+    .dl-btn.primary:hover {
+      background: var(--red-bright);
+      border-color: transparent;
+      box-shadow: 0 6px 28px rgba(220,38,38,0.45);
+    }
+
+    .dl-btn-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .dl-btn.primary .dl-btn-icon {
+      background: rgba(0,0,0,0.2);
+    }
+
+    .dl-btn-info { flex: 1; }
+
+    .dl-btn-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+    }
+
+    .dl-btn-sub {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.5);
+      margin-top: 0.1rem;
+    }
+
+    .dl-btn.primary .dl-btn-sub { color: rgba(255,255,255,0.65); }
+
+    .dl-btn-arrow { color: rgba(255,255,255,0.35); font-size: 0.85rem; }
+
+    .install-divider {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.75rem;
+      margin: 0.25rem 0;
+    }
+
+    .install-footer {
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .install-footer a {
+      color: var(--muted2);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .install-footer a:hover { color: var(--text); }
+
+    /* Beta Banner */
+    .beta-banner {
+      background: rgba(234,179,8,0.05);
+      border: 1px solid rgba(234,179,8,0.15);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      max-width: 960px;
+      margin: 0 auto 3.5rem;
+    }
+
+    .beta-banner-icon { color: #facc15; font-size: 1rem; flex-shrink: 0; margin-top: 2px; }
+    .beta-banner h4 { font-size: 0.875rem; font-weight: 700; color: #fde68a; margin-bottom: 0.2rem; }
+    .beta-banner p  { font-size: 0.825rem; color: var(--muted); }
+    .beta-banner a  { color: var(--muted2); font-weight: 600; text-decoration: none; }
+    .beta-banner a:hover { color: var(--text); }
+
+    /* ── CREDITS ── */
+    #credits { background: var(--bg2); text-align: center; }
+
+    .credits-grid {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 3rem;
+    }
+
+    .credit-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.75rem 2.25rem;
+      min-width: 210px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .credit-card:hover {
+      border-color: var(--border-h);
+      transform: translateY(-3px);
+    }
+
+    .credit-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: var(--red-subtle);
+      border: 1px solid rgba(220,38,38,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--red-bright);
+      font-size: 1.25rem;
+      margin: 0 auto 1rem;
+    }
+
+    .credit-card .name { font-weight: 800; font-size: 1rem; margin-bottom: 0.25rem; color: #fff; letter-spacing: -0.02em; }
+    .credit-card .role { font-size: 0.825rem; color: var(--muted); line-height: 1.5; }
+
+    .credit-card a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      margin-top: 0.75rem;
+      font-size: 0.78rem;
+      color: var(--red-bright);
+      text-decoration: none;
+      font-weight: 600;
+      transition: opacity 0.2s;
+    }
+
+    .credit-card a:hover { opacity: 0.75; }
+
+    .credit-note {
+      margin-top: 2.5rem;
+      font-size: 0.825rem;
+      color: var(--muted);
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.65;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #030305;
+      color: rgba(255,255,255,0.4);
+      text-align: center;
+      padding: 3rem 2rem;
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-logo {
+      font-weight: 900;
+      font-size: 1.1rem;
+      letter-spacing: -0.03em;
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .footer-logo-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--red-bright);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.75rem;
+      justify-content: center;
+      list-style: none;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: rgba(255,255,255,0.35);
+      text-decoration: none;
+      font-size: 0.825rem;
+      transition: color 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .footer-links a:hover { color: rgba(255,255,255,0.75); }
+
+    footer .copy { font-size: 0.775rem; opacity: 0.3; }
+
+    /* ── ANIMATIONS ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ── */
+    /* ── ANNOUNCE BAR ── */
+    .announce-bar {
+      background: var(--red);
+      padding: 2.5rem 2rem;
+      box-shadow: 0 0 80px rgba(220,38,38,0.35);
+    }
+
+    .announce-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .announce-pill {
+      background: rgba(0,0,0,0.25);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.75rem;
+      border-radius: 999px;
+      flex-shrink: 0;
+    }
+
+    .announce-text {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.92);
+      letter-spacing: -0.02em;
+    }
+
+    .announce-text strong {
+      color: #fff;
+      font-weight: 900;
+    }
+
+    .announce-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #fff;
+      color: var(--red);
+      font-size: 0.9rem;
+      font-weight: 800;
+      padding: 0.6rem 1.4rem;
+      border-radius: 8px;
+      text-decoration: none;
+      letter-spacing: -0.01em;
+      transition: transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+      flex-shrink: 0;
+      margin-left: auto;
+    }
+
+    .announce-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+
+    @media (max-width: 600px) {
+      .announce-cta { margin-left: 0; }
+    }
+
+    @media (max-width: 760px) {
+      .install-wrap { grid-template-columns: 1fr; gap: 2.5rem; }
+      .install-card { position: static; }
+      .nav-links { display: none; }
+      .stat { border-right: none; padding: 0.5rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="#">
+      <span class="nav-logo-dot"></span>
+      LumiThing
+    </a>
+    <ul class="nav-links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#install">Install</a></li>
+      <li><a href="#credits">Credits</a></li>
+      <li><a href="https://github.com/1vortexx/LumiThing" target="_blank" rel="noopener">
+        <i class="fa-brands fa-github"></i> GitHub
+      </a></li>
+      <li><a href="#install" class="nav-cta"><i class="fa-solid fa-download"></i> Download</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+
+    <img src="https://lumithing.itsvortexx.space/tray.png" alt="LumiThing" class="hero-logo" />
+
+    <div class="badge">
+      <span class="badge-dot"></span>
+      Now in Beta &nbsp;·&nbsp; Linux &amp; Mac Available
+    </div>
+
+    <h1>
+      Your CarThing,<br />
+      <span class="line2">Reimagined.</span>
+    </h1>
+
+    <p>A custom operating system for the Spotify CarThing — giving your device a full second life with a polished, feature-rich experience.</p>
+
+    <div class="hero-actions">
+      <button class="btn-primary" id="download-btn" onclick="downloadLatest()">
+        <i class="fa-solid fa-download"></i>
+        <span id="download-label">Download</span>
+      </button>
+      <a class="btn-secondary" href="https://github.com/1vortexx/LumiThing" target="_blank" rel="noopener">
+        <i class="fa-brands fa-github"></i>
+        View on GitHub
+      </a>
+      <a class="btn-secondary" href="https://lumithing.itsvortexx.space/discord" target="_blank" rel="noopener">
+        <i class="fa-brands fa-discord"></i>
+        Discord
+      </a>
+    </div>
+
+    <p class="platform-note">
+      <span class="supported"><i class="fa-brands fa-apple"></i> macOS</span> &nbsp;&amp;&nbsp;
+      <span class="supported"><i class="fa-brands fa-linux"></i> Linux</span> &nbsp;supported
+      &nbsp;·&nbsp; Windows coming soon
+    </p>
+
+    <div class="hero-screenshot fade-up">
+      <img src="https://lumithing.itsvortexx.space/LumiThing.png" alt="LumiThing UI" />
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats-bar">
+    <div class="stats-inner">
+      <div class="stat">
+        <div class="stat-num" id="star-count"><span>4.3k</span></div>
+        <div class="stat-label">GitHub Stars</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num"><span>2</span></div>
+        <div class="stat-label">Platforms</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num"><span>8</span></div>
+        <div class="stat-label">Feature Cards</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num"><span>Free</span></div>
+        <div class="stat-label">Always</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ANNOUNCEMENT BANNER -->
+  <div class="announce-bar">
+    <div class="announce-inner">
+      <div class="announce-pill">New</div>
+      <p class="announce-text">Now with <strong>full library control</strong> and <strong>macOS support</strong></p>
+      <a href="#install" class="announce-cta">Download now <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <section id="features">
+    <div class="features-header fade-up">
+      <div class="section-label">What's Included</div>
+      <h2 class="section-title">Everything your CarThing deserves</h2>
+      <p class="section-sub">A complete, polished OS with features Spotify never gave you — and a desktop companion that makes setup effortless.</p>
+    </div>
+    <div class="features-grid fade-up">
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-music"></i></div>
+        <h3>Full Spotify Controls</h3>
+        <p>Play, pause, skip, and adjust volume via touchscreen or the physical dial — with album art, progress, shuffle, and repeat.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-bolt"></i></div>
+        <h3>Customizable Shortcuts</h3>
+        <p>Add up to 8 app shortcuts with Font Awesome icons or custom images. Assign favorites to the four physical preset buttons.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-desktop"></i></div>
+        <h3>Desktop Companion</h3>
+        <p>Guided installer for macOS and Linux that keeps your CarThing connected and up to date — no command line needed.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-rotate"></i></div>
+        <h3>OTA Updates</h3>
+        <p>Updates delivered automatically via GitHub Releases. See a new version? Hit Download, then Install — done.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-wave-square"></i></div>
+        <h3>Audio Visualizer</h3>
+        <p>Live audio visualizer in the media player, with multiple album art background styles including full bleed and thumbnail modes.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-lock"></i></div>
+        <h3>Lock Your Computer</h3>
+        <p>Lock your PC directly from the CarThing menu — or double-tap M for an instant shortcut.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-moon"></i></div>
+        <h3>Sleep Timer &amp; Screensaver</h3>
+        <p>Set a sleep timer or let the built-in screensaver kick in automatically when the device is idle.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-rotate-left"></i></div>
+        <h3>Restore to Stock</h3>
+        <p>Changed your mind? Restore your CarThing to the original Spotify software at any time from the system menu.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- INSTALL -->
+  <section id="install">
+    <div class="beta-banner fade-up">
+      <div class="beta-banner-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+      <div>
+        <h4>LumiThing is in Beta</h4>
+        <p>Expect occasional bugs. Please open a report on <a href="https://github.com/1vortexx/LumiThing/issues" target="_blank" rel="noopener">GitHub</a> or join the <a href="https://lumithing.itsvortexx.space/discord" target="_blank" rel="noopener">Discord</a> — every report helps make LumiThing better.</p>
+      </div>
+    </div>
+
+    <div class="install-wrap">
+      <div class="fade-up">
+        <div class="section-label">Getting Started</div>
+        <h2 class="section-title">Up and running in minutes</h2>
+        <p class="section-sub" style="margin-bottom: 2.5rem;">The desktop companion handles everything — no terminal required.</p>
+        <ol class="steps">
+          <li>
+            <div class="step-num">1</div>
+            <div>
+              <h4>Download LumiThing</h4>
+              <p>Grab the latest release for your platform — macOS and Linux are both supported.</p>
+            </div>
+          </li>
+          <li>
+            <div class="step-num">2</div>
+            <div>
+              <h4>Run the Installer</h4>
+              <p>Open the downloaded file and follow the installation prompts. macOS users: open the .dmg and drag to Applications.</p>
+            </div>
+          </li>
+          <li>
+            <div class="step-num">3</div>
+            <div>
+              <h4>Connect Your CarThing</h4>
+              <p>Open the LumiThing companion app and follow the guided setup to flash your CarThing over USB.</p>
+            </div>
+          </li>
+          <li>
+            <div class="step-num">4</div>
+            <div>
+              <h4>You're Done</h4>
+              <p>LumiThing is running on your device. Future updates install automatically.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+
+      <div class="fade-up">
+        <div class="install-card">
+          <div class="install-card-header">
+            <h3>Download LumiThing</h3>
+            <span class="version-badge" id="version-tag">Latest</span>
+          </div>
+          <p>Always up to date from GitHub Releases.</p>
+
+          <div class="download-platforms">
+            <button class="dl-btn primary" onclick="downloadForPlatform('mac')">
+              <div class="dl-btn-icon"><i class="fa-brands fa-apple"></i></div>
+              <div class="dl-btn-info">
+                <div class="dl-btn-title">Download for macOS</div>
+                <div class="dl-btn-sub">macOS 11+ · Apple Silicon &amp; Intel</div>
+              </div>
+              <i class="fa-solid fa-arrow-down dl-btn-arrow"></i>
+            </button>
+
+            <div class="install-divider">or</div>
+
+            <button class="dl-btn" onclick="downloadForPlatform('linux')">
+              <div class="dl-btn-icon"><i class="fa-brands fa-linux"></i></div>
+              <div class="dl-btn-info">
+                <div class="dl-btn-title">Download for Linux</div>
+                <div class="dl-btn-sub">.AppImage · Debian / Ubuntu · Arch</div>
+              </div>
+              <i class="fa-solid fa-arrow-down dl-btn-arrow"></i>
+            </button>
+          </div>
+
+          <p class="install-footer">
+            Windows — coming soon &nbsp;·&nbsp;
+            <a href="https://github.com/1vortexx/LumiThing/releases" target="_blank" rel="noopener">
+              All releases <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:0.65rem"></i>
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CREDITS -->
+  <section id="credits">
+    <div class="fade-up">
+      <div class="section-label" style="text-align:center">Built With Passion</div>
+      <h2 class="section-title" style="text-align:center">Credits</h2>
+      <p class="section-sub" style="margin: 0 auto; text-align:center;">LumiThing stands on the shoulders of great work.</p>
+    </div>
+    <div class="credits-grid fade-up">
+      <div class="credit-card">
+        <div class="credit-avatar"><i class="fa-solid fa-code"></i></div>
+        <div class="name">1Vortexx</div>
+        <div class="role">Primary LumiThing Developer</div>
+        <a href="https://itsvortexx.space" target="_blank" rel="noopener">
+          itsvortexx.space <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:0.65rem"></i>
+        </a>
+      </div>
+      <div class="credit-card">
+        <div class="credit-avatar"><i class="fa-solid fa-star"></i></div>
+        <div class="name">BluDood</div>
+        <div class="role">Developer of GlanceThing<br />LumiThing's base &amp; inspiration</div>
+      </div>
+    </div>
+    <p class="credit-note fade-up">
+      LumiThing is an independent hobby project and is not affiliated with or competing against Nocturne, GlanceThing, or any other CarThing projects. Built with permission from BluDood to base LumiThing off of GlanceThing.
+    </p>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">
+      <span class="footer-logo-dot"></span>
+      LumiThing
+    </div>
+    <ul class="footer-links">
+      <li><a href="https://github.com/1vortexx/LumiThing" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> GitHub</a></li>
+      <li><a href="https://github.com/1vortexx/LumiThing/releases" target="_blank" rel="noopener"><i class="fa-solid fa-box-archive"></i> Releases</a></li>
+      <li><a href="https://github.com/1vortexx/LumiThing/issues" target="_blank" rel="noopener"><i class="fa-solid fa-bug"></i> Bug Reports</a></li>
+      <li><a href="https://lumithing.itsvortexx.space/discord" target="_blank" rel="noopener"><i class="fa-brands fa-discord"></i> Discord</a></li>
+      <li><a href="https://itsvortexx.space" target="_blank" rel="noopener"><i class="fa-solid fa-user"></i> Developer</a></li>
+    </ul>
+    <p class="copy">Your CarThing, reimagined. &nbsp;·&nbsp; Made with care by 1Vortexx.</p>
+  </footer>
+
+  <script>
+    /* ── Platform detection ── */
+    const isMac = navigator.platform.toLowerCase().includes('mac') ||
+                  navigator.userAgent.toLowerCase().includes('mac');
+
+    /* Set hero button label */
+    document.getElementById('download-label').textContent =
+      isMac ? 'Download for Mac' : 'Download for Linux';
+
+    /* Highlight recommended platform button */
+    document.addEventListener('DOMContentLoaded', () => {
+      if (!isMac) {
+        const btns = document.querySelectorAll('.dl-btn');
+        btns[0].classList.remove('primary');
+        btns[1].classList.add('primary');
+        btns[1].style.boxShadow = '0 4px 20px rgba(220,38,38,0.3)';
+      }
+    });
+
+    /* ── GitHub API ── */
+    let latestRelease = null;
+
+    async function fetchRelease() {
+      try {
+        const res = await fetch('https://api.github.com/repos/1vortexx/LumiThing/releases/latest');
+        if (!res.ok) return;
+        latestRelease = await res.json();
+
+        const tag = document.getElementById('version-tag');
+        if (tag && latestRelease.tag_name) tag.textContent = latestRelease.tag_name;
+
+      } catch {}
+    }
+
+    fetchRelease();
+
+    function pickAsset(assets, platform) {
+      if (platform === 'mac') {
+        return assets.find(a => a.name.toLowerCase().includes('mac') && a.name.endsWith('.dmg')) ||
+               assets.find(a => a.name.toLowerCase().includes('darwin')) ||
+               assets.find(a => a.name.endsWith('.dmg')) ||
+               assets.find(a => a.name.toLowerCase().includes('mac'));
+      }
+      return assets.find(a => a.name.toLowerCase().includes('linux') && a.name.endsWith('.AppImage')) ||
+             assets.find(a => a.name.toLowerCase().includes('linux')) ||
+             assets.find(a => a.name.endsWith('.AppImage')) ||
+             assets.find(a => a.name.endsWith('.deb')) ||
+             assets.find(a => a.name.endsWith('.tar.gz')) ||
+             assets[0];
+    }
+
+    async function downloadForPlatform(platform) {
+      if (!latestRelease) await fetchRelease();
+      if (!latestRelease) { window.open('https://github.com/1vortexx/LumiThing/releases/latest', '_blank'); return; }
+
+      const asset = pickAsset(latestRelease.assets, platform);
+      if (!asset) { window.open(latestRelease.html_url, '_blank'); return; }
+
+      const link = document.createElement('a');
+      link.href = asset.browser_download_url;
+      link.download = asset.name;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    function downloadLatest() {
+      downloadForPlatform(isMac ? 'mac' : 'linux');
+    }
+
+    /* ── Scroll animations ── */
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
